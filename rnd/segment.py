@@ -502,7 +502,7 @@ def save_output_images(predictions, filenames, output_dir):
         im = Image.fromarray(predictions[0].astype(np.uint8))
         #fn = os.path.join(output_dir, filenames[ind][:-4] + '.png')
         #out_dir = split(fn)[0]
-        out_dir = '/home/ananth/drn/results/'
+        out_dir = '/home/ubuntu/src/hackathon/groundtruth/rnd/results/'
         fn = os.path.join(out_dir, filenames[ind][:-4] + '_grid.png')
         #if not exists(out_dir):
         #   os.makedirs(out_dir)
@@ -514,7 +514,7 @@ def save_colorful_images(predictions, filenames, output_dir, palettes):
    Saves a given (B x C x H x W) into an image file.
    If given a mini-batch tensor, will save the tensor as a grid of images.
    """
-   output_dir = "/home/ananth/drn/results/"
+   output_dir = "/home/ubuntu/src/hackathon/groundtruth/rnd/results/"
 
    for ind in range(len(filenames)):
        im = Image.fromarray(palettes[predictions[ind].squeeze()])
@@ -668,7 +668,7 @@ def test_seg(args):
     #model = torch.nn.DataParallel(single_model)
 
     data_dir = args.data_dir
-    info = json.load(open(join('/home/ananth/drn/info.json'), 'r'))
+    info = json.load(open(join('/home/ubuntu/src/hackathon/groundtruth/rnd/info.json'), 'r'))
     normalize = transforms.Normalize(mean=info['mean'], std=info['std'])
     scales = [0.5, 0.75, 1.25, 1.5, 1.75]
     if args.ms:
@@ -726,8 +726,8 @@ def parse_args():
     # Training settings
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('-cmd', choices=['train', 'test'])
-    parser.add_argument('-d', '--data-dir', default="/home/ananth/drn/images/")
-    parser.add_argument('-l', '--list-dir', default="/home/ananth/drn/images/",
+    parser.add_argument('-d', '--data-dir', default="/home/ubuntu/src/hackathon/groundtruth/rnd/images/")
+    parser.add_argument('-l', '--list-dir', default="/home/ubuntu/src/hackathon/groundtruth/rnd/images/",
                         help='List dir to look for train_images.txt etc. '
                              'It is the same with --data-dir if not set.')
     parser.add_argument('-c', '--classes', default=19, type=int)
@@ -751,7 +751,7 @@ def parse_args():
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                         help='path to latest checkpoint (default: none)')
     parser.add_argument('--pretrained', dest='pretrained',
-                        default='/home/ananth/drn/drn-d-105_ms_cityscapes.pth', type=str, metavar='PATH',
+                        default='/home/ubuntu/src/hackathon/groundtruth/rnd/pretrainedModel.pth', type=str, metavar='PATH',
                         help='use pre-trained model')
     parser.add_argument('-j', '--workers', type=int, default=8)
     parser.add_argument('--load-release', dest='load_rel', default=None)
