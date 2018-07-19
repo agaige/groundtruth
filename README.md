@@ -24,4 +24,4 @@ Run Web App
 ~~~~
 docker-compose up --build
 ~~~~
-Check http://127.0.0.1/
+Check http://<host-address>:8081/

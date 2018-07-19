@@ -3,7 +3,7 @@ services:
   nginx:
     image: "nginx:1.15.1"
     ports:
-      - "80:80"
+      - "8081:8081"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./app/static:/app/static
