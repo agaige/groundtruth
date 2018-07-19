@@ -113,7 +113,8 @@ RotatedRect largestRectInNonConvexPoly(const Mat1b& src, int &finalAngle)
 int main(int argc, char** argv)
 {
     Mat1b imageMat = imread(argv[1], IMREAD_GRAYSCALE);
-
+    Mat inputMat = imread(argv[2], IMREAD_COLOR);
+    Mat dstImage = cv::Mat::zeros(inputMat.size(), inputMat.type());  
     //Binary image
     cv::Mat1b img(imageMat.size(), imageMat.type());
 
@@ -148,7 +149,8 @@ int main(int argc, char** argv)
     vector<vector<Point>> pts = { { points[0], points[1], points[2], points[3] } };
     fillPoly(mask, pts, Scalar(0));
     mask = ~ mask;
-    imwrite("Result.png", mask);
+    inputMat.copyTo(dstImage, mask);
+    imwrite("Result.png", dstImage);
 
     return 0;
 }
