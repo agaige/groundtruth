@@ -1,0 +1,24 @@
+version: '2'
+services:
+  nginx:
+    image: "nginx:1.15.1"
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./app/static:/app/static
+    links:
+      - app:app
+    networks:
+      - web
+
+  app:
+    extends:
+      file: ./app/docker-compose.yml
+      service: app
+    command: gunicorn app:app -b :8000 --name app --log-level=debug --log-file=-
+    networks:
+      - web
+
+networks:
+  web:
