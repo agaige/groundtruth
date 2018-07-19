@@ -1,5 +1,31 @@
-version: '2'
+version: '3'
 services:
+  redis_db:
+    image: redis:4.0
+    ports:
+      - "6379:6379"
+    networks:
+      - db
+
+  app:
+    container_name: app
+    build:
+      context: ./app
+    restart: always
+    command: python manage.py run -h 0.0.0.0
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=config.BaseConfig
+    expose:
+      - "5000"
+    volumes:
+      - ./app:/app
+    networks:
+      - web
+      - db
+    depends_on:
+      - redis_db
+
   nginx:
     image: "nginx:1.15.1"
     ports:
@@ -11,14 +37,22 @@ services:
       - app:app
     networks:
       - web
+    depends_on:
+      - app
 
-  app:
-    extends:
-      file: ./app/docker-compose.yml
-      service: app
-    command: gunicorn app:app -b :8000 --name app --log-level=debug --log-file=-
+  dashboard:
+    build: ./app/dashboard
+    image: dashboard
+    container_name: dashboard
+    ports:
+      - '8082:8082'
+    command: rq-dashboard -H redis_db -p 8082
     networks:
       - web
+      - db
+    depends_on:
+      - redis_db
 
 networks:
   web:
+  db:
