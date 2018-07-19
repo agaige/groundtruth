@@ -684,7 +684,7 @@ def test_seg(args):
 
     test_loader = torch.utils.data.DataLoader(
         dataset,
-        batch_size=1, shuffle=False, num_workers=num_workers,
+        batch_size=batch_size, shuffle=False, num_workers=num_workers,
         pin_memory=False
     )
 
@@ -734,7 +734,7 @@ def parse_args():
     parser.add_argument('--s', '--crop-size', default=0, type=int)
     parser.add_argument('--step', type=int, default=200)
     parser.add_argument('--arch', '-drn_d_105', default='drn_d_105')
-    parser.add_argument('--batch-size', type=int, default=64, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=2, metavar='N',
                         help='input batch size for training (default: 64)')
     parser.add_argument('--epochs', type=int, default=10, metavar='N',
                         help='number of epochs to train (default: 10)')
