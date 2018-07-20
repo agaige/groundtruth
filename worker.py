@@ -1,3 +1,5 @@
+# requires pip install rq==0.12.0 redis==2.10.6
+
 import time
 
 import redis
