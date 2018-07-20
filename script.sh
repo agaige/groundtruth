@@ -11,17 +11,18 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 #export PATH=$HOME/anaconda3/bin/:$PATH
 export PATH=$HOME/anaconda3/bin/:home/ubuntu/anaconda3/bin/:/usr/local/cuda/bin:/usr/local/bin:/opt/aws/bin:/usr/local/mpi/bin:/usr/local/cuda/bin:/usr/local/bin:/opt/aws/bin:/home/ubuntu/src/cntk/bin:/usr/local/mpi/bin:/home/ubuntu/anaconda3/bin/:/home/ubuntu/bin:/home/ubuntu/.local/bin:/home/ubuntu/anaconda3/bin/:/usr/local/cuda/bin:/usr/local/bin:/opt/aws/bin:/usr/local/mpi/bin:/usr/local/cuda/bin:/usr/local/bin:/opt/aws/bin:/home/ubuntu/src/cntk/bin:/usr/local/mpi/bin:/usr/local/cuda/bin:/usr/local/bin:/opt/aws/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$PATH
 
-#MY_INPUT_FILE='https://cdn.jauntvr.com/hackathon2018/royalty_free_oosterpark_field_grass.jpg'
-#if [[ -z "${INPUT_URL}" ]]; then
-#  MY_INPUT_FILE="${INPUT_URL}"
-#else
-#  echo "Using default input file"
-#fi
+MY_INPUT_FILE='https://cdn.jauntvr.com/hackathon2018/royalty_free_oosterpark_field_grass.jpg'
+if [[ -z "${INPUT_URL}" ]]; then
+  echo "Using default input file"
+else
+  MY_INPUT_FILE="${INPUT_URL}"
+  echo "Using ${INPUT_URL}"
+fi
 
 PathToImages='/home/ubuntu/src/hackathon/groundtruth/rnd/images/'
 TextFile='/home/ubuntu/src/hackathon/groundtruth/rnd/images/test_images.txt'
 
-#curl $MY_INPUT_FILE --output $PathToImages/input_file.jpg
+curl $MY_INPUT_FILE --output /home/ubuntu/src/hackathon/groundtruth/rnd/images/input_file.jpg
 
 TextFileOut='/home/ubuntu/src/hackathon/groundtruth/rnd/results/out_images.txt'
 PathToOutputImage='/home/ubuntu/src/hackathon/groundtruth/rnd/results/'

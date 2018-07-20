@@ -43,7 +43,12 @@ def main():
     # crop few drak
     #img_croped2 = crop_image(imgGray, 0)
 
-    cv2.imwrite('FinalResult.png', img_croped[5:-5, 5:-5, :]);
-
+    cv2.imwrite('FinalResult.jpg', img_croped[5:-5, 5:-5, :]);
+    cropped_final = img_croped[5:-5, 5:-5, :]
+    a,b,c = np.shape(cropped_final)
+    if a > b:
+        cv2.imwrite('Square_FinalResult.jpg', cropped_final[:b,:])
+    if a < b:
+        cv2.imwrite('Square_FinalResult.jpg',cropped_final[:,:a]) 
 if __name__ == "__main__":
     main()

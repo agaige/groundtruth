@@ -18,7 +18,7 @@ def run_task():
     image_url = request.form['url']
     with Connection(redis.from_url(current_app.config['REDIS_URL'])):
         q = Queue()
-        task = q.enqueue('__main__.process_image', image_url, timeout=20)
+        task = q.enqueue('__main__.process_image', image_url, timeout=120)
     response_object = {
         'status': 'success',
         'data': {
