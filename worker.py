@@ -23,7 +23,7 @@ def process_image(url):
 
     try:
         p = subprocess.run(
-            ['source', '/home/ubuntu/.bashrc', '&&', 'bash', 'script.sh'],
+            ['/bin/bash', 'script.sh'],
             shell=True,
             check=True,
             stdout=subprocess.PIPE,
