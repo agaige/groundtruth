@@ -1,6 +1,7 @@
 # requires pip install rq==0.12.0 redis==2.10.6
 
-import time
+import os
+import subprocess
 
 import redis
 from rq import Connection, Worker
@@ -10,12 +11,35 @@ QUEUE = 'default'
 
 
 def process_image(url):
-    time.sleep(5)
+    result = {
+        'value': '',
+        'status': 'failed',
+    }
     # Work on image
     print('Processing image: %s' % url)
 
+    env = os.environ.copy()
+    env['INPUT_URL'] = url
+
+    try:
+        p = subprocess.run(
+            ['sh', 'script.sh'],
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            env=env
+        )
+    except subprocess.CalledProcessError as err:
+        result['error'] = err
+    else:
+        result['status'] = 'success'
+        result['returncode'] = p.returncode
+        result['stdout'] = p.stdout.decode('utf-8')
+        result['stderr'] = p.stderr.decode('utf-8')
+
     # Return result
-    return url
+    return result
 
 
 def run_worker():
