@@ -10,9 +10,9 @@ $('.btn').on('click', function() {
     data: { url: $('#input-url').val() },
     method: 'POST'
   })
-  .done((res) => {
-    getStatus(res.data.task_id)
-  })
+//  .done((res) => {
+//    getStatus(res.data.task_id)
+//  })
   .fail((err) => {
     console.log(err)
   });
