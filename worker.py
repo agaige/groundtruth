@@ -32,7 +32,7 @@ def process_image(url):
             cwd=os.getcwd()
         )
     except subprocess.CalledProcessError as err:
-        result['error'] = err
+        result['error'] = str(err)
     else:
         result['status'] = 'success'
         result['returncode'] = p.returncode
