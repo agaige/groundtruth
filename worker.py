@@ -38,6 +38,7 @@ def process_image(url):
         result['returncode'] = p.returncode
         result['stdout'] = p.stdout.decode('utf-8')
         result['stderr'] = p.stderr.decode('utf-8')
+        result['value'] = u'http://52.38.253.90:8000/Demo_Final.jpg'
 
     # Return result
     return result
