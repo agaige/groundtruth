@@ -56,12 +56,13 @@ def _get_request_payload(data={}, files={}, json_payload=False):
     return {'data': data, 'files': files, 'headers': headers}
 
 
-def upload():
+def upload(reupload=False, model_id=None):
     """POST a model to sketchfab.
 
     This endpoint only accepts formData as we upload a file.
     """
     model_endpoint = os.path.join(SKETCHFAB_API_URL, 'models')
+    _method = "POST"
 
     # Mandatory parameters
     model_file = MODEL_PATH  # path to your model
@@ -78,15 +79,25 @@ def upload():
         'isPublished': isPublished,
         'isInspectable': isInspectable
     }
+    if model_id is not None:
+        data['uid'] = model_id
+
+    if reupload:
+        _method = "PUT"
+        model_endpoint = os.path.join(model_endpoint, model_id)
+        print 'Re-Uploading ...'
+    else:
+        print 'Uploading ...'
 
     f = open(model_file, 'rb')
 
     files = {'modelFile': f}
 
-    print 'Uploading ...'
+
+
 
     try:
-        r = requests.post(
+        r = requests.request(_method,
             model_endpoint, **_get_request_payload(
                 data, files=files))
     except requests.exceptions.RequestException as e:
@@ -95,12 +106,18 @@ def upload():
     finally:
         f.close()
 
-    if r.status_code != requests.codes.created:
+    if (r.status_code != requests.codes.created and
+            r.status_code != requests.codes.no_content):
         print u'Upload failed with error: {}'.format(r.json())
         return
 
     # Should be https://api.sketchfab.com/v3/models/XXXX
-    model_url = r.headers['Location']
+    model_url = None
+    if model_id:
+        model_url = "https://api.sketchfab.com/v3/models/{}".format(model_id)
+    elif 'Location' in r.headers:
+        model_url = r.headers['Location']
+
     print 'Upload successful. Your model is being processed.'
     print 'Once the processing is done, the model will be available at: {}'.format(
         model_url)
@@ -223,10 +240,9 @@ if __name__ == "__main__":
     ret = shutil.make_archive(os.path.splitext(MODEL_PATH)[0],
                               'zip',
                               os.path.splitext(MODEL_PATH)[0])
-    import pdb
-    pdb.set_trace()
 
-    model_url = upload()
+    model_url = upload(reupload=True,
+                       model_id='e458ffaef2ab4f369b12ac56702b283f')
 
     if model_url:
         if poll_processing_status(model_url):
