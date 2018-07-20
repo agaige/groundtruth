@@ -518,7 +518,7 @@ def save_colorful_images(predictions, filenames, output_dir, palettes):
 
    for ind in range(len(filenames)):
        im = Image.fromarray(palettes[predictions[ind].squeeze()])
-       fn = os.path.join(output_dir, filenames[ind][:-4] + '_test_color.png')
+       fn = os.path.join(output_dir, filenames[ind][:-4] + '_mask.png')
        out_dir = split(fn)[0]
        # if not exists(out_dir):
        #     os.makedirs(out_dir)
@@ -551,14 +551,14 @@ def test(eval_data_loader, model, num_classes,
         if has_gt:
             label = label.numpy()
             hist += fast_hist(pred.flatten(), label.flatten(), num_classes)
-            logger.info('===> mAP {mAP:.3f}'.format(
-                mAP=round(np.nanmean(per_class_iu(hist)) * 100, 2)))
+            #logger.info('===> mAP {mAP:.3f}'.format(
+             #   mAP=round(np.nanmean(per_class_iu(hist)) * 100, 2)))
         end = time.time()
-        logger.info('Eval: [{0}/{1}]\t'
-                    'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                    'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
-                    .format(iter, len(eval_data_loader), batch_time=batch_time,
-                            data_time=data_time))
+        #logger.info('Eval: [{0}/{1}]\t'
+         #           'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+          #          'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
+           #         .format(iter, len(eval_data_loader), batch_time=batch_time,
+            #                data_time=data_time))
     if has_gt: #val
         ious = per_class_iu(hist) * 100
         logger.info(' '.join('{:.03f}'.format(i) for i in ious))
@@ -734,7 +734,7 @@ def parse_args():
     parser.add_argument('--s', '--crop-size', default=0, type=int)
     parser.add_argument('--step', type=int, default=200)
     parser.add_argument('--arch', '-drn_d_105', default='drn_d_105')
-    parser.add_argument('--batch-size', type=int, default=2, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=1, metavar='N',
                         help='input batch size for training (default: 64)')
     parser.add_argument('--epochs', type=int, default=10, metavar='N',
                         help='number of epochs to train (default: 10)')
@@ -767,8 +767,8 @@ def parse_args():
 
     assert args.classes > 0
 
-    print(' '.join(sys.argv))
-    print(args)
+    #print(' '.join(sys.argv))
+    #print(args)
 
     if args.bn_sync:
         drn.BatchNorm = batchnormsync.BatchNormSync
