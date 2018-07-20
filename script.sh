@@ -1,7 +1,16 @@
 #!/bin/sh
 
+MY_INPUT_FILE='https://cdn.jauntvr.com/hackathon2018/royalty_free_oosterpark_field_grass.jpg'
+if [[ -z "${INPUT_URL}" ]]; then
+  MY_INPUT_FILE="${INPUT_URL}"
+else
+  echo "Using default input file"
+fi
+
 PathToImages='/home/ubuntu/src/hackathon/groundtruth/rnd/images/'
 TextFile='/home/ubuntu/src/hackathon/groundtruth/rnd/images/test_images.txt'
+
+curl $MY_INPUT_FILE --output $PathToImages/input_file.jpg
 
 TextFileOut='/home/ubuntu/src/hackathon/groundtruth/rnd/results/out_images.txt'
 PathToOutputImage='/home/ubuntu/src/hackathon/groundtruth/rnd/results/'
