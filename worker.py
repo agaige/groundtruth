@@ -23,12 +23,13 @@ def process_image(url):
 
     try:
         p = subprocess.run(
-            ['sh', 'script.sh'],
+            ['source', '/home/ubuntu/.bashrc', '&&', 'bash', 'script.sh'],
             shell=True,
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            env=env
+            env=env,
+            cwd=os.getcwd()
         )
     except subprocess.CalledProcessError as err:
         result['error'] = err
