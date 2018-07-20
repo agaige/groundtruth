@@ -1,16 +1,14 @@
-from datetime import datetime
-
 import redis
 from rq import Queue, Connection
-from flask import (Blueprint, jsonify, request, current_app)
+from flask import (Blueprint, render_template, jsonify, request,
+                   current_app)
 
 groundtruth = Blueprint('main', __name__, )
 
 
 @groundtruth.route('/', methods=['GET'])
 def home():
-    now = str(datetime.now())
-    return 'Hello, World! Current Time is %s' % now
+    return render_template('main/home.html')
 
 
 @groundtruth.route('/tasks', methods=['GET', 'POST'])
