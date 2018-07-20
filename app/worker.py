@@ -9,8 +9,11 @@ QUEUE = 'default'
 
 def process_image(url):
     time.sleep(5)
-    # TODO: Work on image
+    # Work on image
     print('Processing image: %s' % url)
+
+    # Return result
+    return url
 
 
 def run_worker():
