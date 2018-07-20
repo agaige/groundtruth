@@ -23,7 +23,7 @@ def process_image(url):
 
     try:
         p = subprocess.run(
-            ['/bin/bash', 'script.sh'],
+            ['touch', 'foo', '&&', 'pwd', '&&', '/bin/bash', 'script.sh'],
             shell=True,
             check=True,
             stdout=subprocess.PIPE,
