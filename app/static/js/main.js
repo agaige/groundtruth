@@ -40,7 +40,7 @@ function getStatus(taskID) {
       }
       elem = document.createElement("img");
       elem.setAttribute("id", "output-image")
-      elem.setAttribute("src", `${res.data.task_result.value}`);
+      elem.setAttribute("src", `${res.data.task_result['value']}`);
       elem.setAttribute("height", "1024");
       elem.setAttribute("width", "1024");
       document.getElementById("output-container").appendChild(elem);
